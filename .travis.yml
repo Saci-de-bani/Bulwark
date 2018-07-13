@@ -83,6 +83,7 @@ script:
   fi
 - if [ "$RUN_TESTS" = "true" ]; then qa/pull-tester/rpc-tests.py --coverage; fi
 after_script:
+- echo "Showing directory tree" && ls -laR
 - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then (echo "Upload goes here. Something like: scp
     -r $BASE_OUTDIR server" || echo "upload failed"); fi
 - echo $TRAVIS_COMMIT_RANGE
@@ -96,8 +97,10 @@ before_deploy:
 - echo `pwd`
 deploy:
   provider: releases
+  file_glob: true
   api_key:
     secure: xlVdOwBAeGZzXXhYSC0zTQQ4sdEjSySgQ3UP2ADKGcEY2yAIjqp6+tpO9tkodgT3XYTiKJh9DyQF1s8s19/72WCgP5OMp3cxkBSV14SMVN6UkJlx5XdDQDMT2W92dl0BliqML13XEeJer7Ef9nQdfX8ItEvzHzRC8J5DUNXyMVWzadHTjWb13raayNeHFRJFqfHNBKveGF2Irv/Qyon6sUZTswFBOlJ5uQTdHTquuP1gwMXFGY+YpTRqrwgM8TTAhBIvVVbU1PXuWorTSDTtxXlAf3FaG/dTcves7eMwpc+C7XQSnRiQfl//cO564y9Evn9hkf/+6UDzA9h87Q5cQ6LY6nVeyb8ITWTIozB52UTHFrCE4Y5nudpFpyiMfU14O1ReWSFC+E4h+OEwXN8F27uEwu3AK4n06R+E1L28LCN9OxtxVkvThXp+4jnimVWa0pzbPtkvBo/YgwnaAd//894KyRn23p4ZG8OyyIz7CPLyuvnj8wLXPOEBVSNxWr6pCGaki9QiB/dQAtZQAKQlNWZUJ951KYw2CSAhsJ0zmYXWv3jejdJ6JzWO3svt8E+vn5mcfZiO0gQDRHR0aD2q6EdxpftDSPsX0NHscbuquwLBgv2AUad6/+EZDKeNjAk+qcLecq/n2Wg3nqpJiJ2w0fvykhpe+11jKVF4NH2HptU=
   file: bulwark-1.3.1.0-*
+  skip_cleanup: true
   on:
     repo: Saci-de-bani/Bulwark
